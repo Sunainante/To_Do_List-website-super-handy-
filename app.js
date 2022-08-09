@@ -1,9 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const date = require(__dirname + "/date.js");
+console.log(date);
+
+// console.log(date());//here when we add parenthesis then the function gets activated and hence we get the date
 
 const app = express();
-var todo_input = [ "buy food","cook food","have fun"];
-var todo_list_atWork = ["work","work"];
+const todo_input = [ "buy food","cook food","have fun"];//we are able to push items to the array even though its a const but we cannot assign a new item to the array
+const todo_list_atWork = ["work","work"];
 
 app.set('view engine', 'ejs');
 // or u can also write app.use("view engine","ejs");
@@ -14,15 +18,8 @@ app.use(express.static("public"))
 app.get("/",function(req,res)
 {
 
-  var todayDate = new Date();
-  var options = {
-    weekday: "long",
-    day:"numeric",
-    month:"long"
-    };
-
-  var day = todayDate.toLocaleDateString("en-US",options);
-  res.render("list",{listTitle:day,todo_inputs:todo_input});
+  let date_day = date.getDate();
+  res.render("list",{listTitle:date_day,todo_inputs:todo_input});//this ejs template where u take these data and put in html files
 })
 
 app.get("/work",function(req,res){
